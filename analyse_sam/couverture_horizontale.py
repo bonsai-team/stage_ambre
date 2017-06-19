@@ -20,10 +20,9 @@ for aln in sam:
         ref_t[aln[1].split(":")[1]] = int(aln[2].split(":")[1])
         tmp[aln[1].split(":")[1]] = [0]
     else:
-        if aln[0:3] == "@PG":
+        if aln[0] == "@":
             continue
         aln = aln.split()
-        print aln
         if aln[2] == "*":
             continue
         cig = re.split('(\d+)', aln[5])
@@ -37,13 +36,9 @@ for aln in sam:
         tmp[aln[2]].append(taille)
 probleme = 0
 gros_probl = 0
-reads_tot = 0
 for ref in ref_t.keys():
-    reads_tot += len(tmp[ref])
     pourc = max(tmp[ref]) / float(ref_t[ref])
-    if pourc > 1.5:
-        gros_probl += 1
-    elif pourc > 1:
+    if pourc > 1:
         probleme += 1
     elif pourc == 1:
         cov[6] += 1
@@ -57,7 +52,9 @@ for ref in ref_t.keys():
         cov[2] += 1
     elif pourc > 0:
         cov[1] += 1
-    else:
+    elif cov[0] == 0:
         cov[0] += 1
+    else:
+        gros_probl += 1
 print("La couverture horizontale est (reads individuels) : {}".format(cov))
-print("Il y a {} reads qui ont une taille > a la ref et {} qui ont une taille > a 1.5 fois celle du read".format(probleme, gros_probl))
+print("Il y a {} reads qui ont une taille > a la ref".format(probleme))
