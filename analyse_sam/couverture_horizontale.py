@@ -18,8 +18,10 @@ for aln in sam:
     if aln[0:3] == "@SQ":
         aln = aln.split()
         ref_t[aln[1].split(":")[1]] = int(aln[2].split(":")[1])
-        tmp[aln[1].split(":")[1]] = []
+        tmp[aln[1].split(":")[1]] = [0]
     else:
+        if aln[0:3] == "@PG":
+            continue
         aln = aln.split()
         if aln[2] == "*":
             continue
@@ -30,6 +32,7 @@ for aln in sam:
                 taille += int(cig[i - 1])
             elif cig[i] == "H":
                 taille += int(cig[i - 1])
+        taille = len(aln[9]) - taille #taille de l'aln
         tmp[aln[2]].append(taille)
 for ref in ref_t.keys():
     pourc = max(tmp[ref]) / float(ref_t[ref])
@@ -45,4 +48,5 @@ for ref in ref_t.keys():
         cov[1] += 1
     else:
         cov[0] += 1
-print("La couverture horizontale est : {}".format(cov))
+print("La couverture horizontale est (reads individuels) : {}".format(cov))
+

@@ -10,4 +10,4 @@ for aln in sam:
         continue
     aln = aln.split()
     transcrits[aln[2]] = 1
-print("La couverture verticale est : {}".format(len(D.keys())))
+print("La couverture verticale est : {}".format(len(transcrits.keys())))
