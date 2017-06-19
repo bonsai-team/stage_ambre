@@ -13,7 +13,7 @@ sam = f.readlines()
 
 ref_t = {}
 tmp = {}
-cov = {0 : 0, 1 : 0, 2 : 0, 3 : 0, 4 : 0, 5 : 0}
+cov = {0 : 0, 1 : 0, 2 : 0, 3 : 0, 4 : 0, 5 : 0, 6 : 0}
 for aln in sam:
     if aln[0:3] == "@SQ":
         aln = aln.split()
@@ -23,6 +23,7 @@ for aln in sam:
         if aln[0:3] == "@PG":
             continue
         aln = aln.split()
+        print aln
         if aln[2] == "*":
             continue
         cig = re.split('(\d+)', aln[5])
@@ -34,19 +35,29 @@ for aln in sam:
                 taille += int(cig[i - 1])
         taille = len(aln[9]) - taille #taille de l'aln
         tmp[aln[2]].append(taille)
+probleme = 0
+gros_probl = 0
+reads_tot = 0
 for ref in ref_t.keys():
+    reads_tot += len(tmp[ref])
     pourc = max(tmp[ref]) / float(ref_t[ref])
-    if pourc == 1:
-        cov[5] += 1
+    if pourc > 1.5:
+        gros_probl += 1
+    elif pourc > 1:
+        probleme += 1
+    elif pourc == 1:
+        cov[6] += 1
     elif pourc > 0.8:
-        cov[4] += 1
+        cov[5] += 1
     elif pourc > 0.6:
-        cov[3] += 1
+        cov[4] += 1
     elif pourc > 0.4:
-        cov[2] += 1
+        cov[3] += 1
     elif pourc > 0.2:
+        cov[2] += 1
+    elif pourc > 0:
         cov[1] += 1
     else:
         cov[0] += 1
 print("La couverture horizontale est (reads individuels) : {}".format(cov))
-
+print("Il y a {} reads qui ont une taille > a la ref et {} qui ont une taille > a 1.5 fois celle du read".format(probleme, gros_probl))

@@ -9,5 +9,10 @@ for aln in sam:
     if aln[0] == "@":
         continue
     aln = aln.split()
-    transcrits[aln[2]] = 1
+    if aln[2] == "*":
+        continue
+    if aln[2] in transcrits.keys():
+        transcrits[aln[2]] += 1
+    else:
+        transcrits[aln[2]] = 1
 print("La couverture verticale est : {}".format(len(transcrits.keys())))

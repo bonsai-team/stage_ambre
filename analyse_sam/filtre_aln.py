@@ -10,6 +10,7 @@ start_time = time.time()
 compt = 0
 nb_aln = 0
 sec = 0
+unmapped = 0
 for aln in sam:
     if aln[0] == "@":
         output.write(aln)
@@ -20,6 +21,10 @@ for aln in sam:
         if (tmp[1] == "256" or tmp[1] == "2048"):
             flag = False
             sec += 1
+            continue
+        if (tmp[1] == "4"):
+            flag = False
+            unmapped += 1
             continue
         cig = re.split('(\d+)', tmp[5])
         taille = 0
@@ -36,6 +41,7 @@ print("Done. Total time in sec : " + str(time.time() - start_time))
 print("Il y a " + str(nb_aln) + " alignements au total.")
 print("On a retiré " + str(compt) + " alignements qui impliquent moins de 50% du read")
 print("On a retiré " + str(sec) + " alignements secondaires")
-print("Il reste maintenant " + str(nb_aln - sec - compt) + " alignements.")
+print("On a retiré {} reads non mappés".format(unmapped))
+print("Il reste maintenant " + str(nb_aln - sec - compt - unmapped) + " alignements.")
 output.close()
 f.close()
