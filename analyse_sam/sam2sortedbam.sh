@@ -1,4 +1,4 @@
-#python filtre_aln.py $1
+python filtre_aln.py $1
 SAM=new_$1
 python couverture_horizontale.py $SAM
 python couverture_verticale.py $SAM
