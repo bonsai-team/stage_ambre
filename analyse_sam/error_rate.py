@@ -6,8 +6,9 @@ f = open(sys.argv[1], "r")
 sam = f.readlines()
 f.close()
 
-output = open(sys.argv[1] + "error_rate.txt", "w")
-
+output = open(sys.argv[1][0:-4] + "_error_rate.txt", "w")
+mean = 0
+c = 0
 for aln in sam:
     if aln[0] == "@":
         continue
@@ -21,5 +22,8 @@ for aln in sam:
         if cig[i] == "S" or cig[i] == "H":
             clips += int(cig[i - 1])
     taille_aln = len(aln[9]) - clips
+    mean += (1 - float(matchs) / taille_aln)
+    c += 1
     output.write(str(1 - float(matchs) / taille_aln) + " " + str(len(aln[9])) + " " + str(taille_aln) + "\n")
 output.close()
+print("Taux d'erreur moyen : {}%".format(mean / c * 100))
