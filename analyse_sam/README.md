@@ -8,7 +8,7 @@ Script qui retire les alignements qui prennent en compte moins de x% du read en 
 `python error_rate.py aln.sam`
 Script qui crée un fichier aln_error_rate.txt, avec un taux d'erreur par ligne. A faire tourner sur un fichier nettoyé des reads superflus avec filtre_aln.py
 
-### couvertures.py
+### couverture.py
 `python couverture.py aln.sam`
 
 Script qui affiche le nombre de transcrits touchés par au moins un alignement (couverture verticale) et qui crée deux fichiers (couverture horizontale): 
