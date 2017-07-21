@@ -37,6 +37,8 @@ for aln in sam:
         for i in range(0, len(cig)):
             if cig[i] == "S":
                 taille += int(cig[i - 1])
+            elif cig[i] == "H":
+                taille += int(cig[i - 1])
         if (len(tmp[9]) * pourc < (len(tmp[9]) - taille) and flag):
             output.write(aln)
         else:
