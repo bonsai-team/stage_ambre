@@ -7,7 +7,7 @@ pourc = 0.5
 
 f = open(sys.argv[1], "r")
 sam = f.readlines()
-output = open(os.path.dirname(sys.argv[1]) + "/new_" + os.path.basename(sys.    argv[1]), "w")
+output = open(os.path.dirname(sys.argv[1]) + "new_" + os.path.basename(sys.    argv[1]), "w")
 start_time = time.time()
 compt = 0
 nb_aln = 0
