@@ -20,17 +20,13 @@ for aln in sam:
         nb_aln += 1
         flag = True
         tmp = aln.split()
-        if (tmp[1] == "256" or tmp[1] == "2048"):
+        if (tmp[1] == "256" or tmp[1] >= "2048"):
             flag = False
             sec += 1
             continue
         if (tmp[1] == "4"):
             flag = False
             unmapped += 1
-            continue
-        if (tmp[13].split(":")[2] != "1"):
-            flag = False
-            sec += 1
             continue
         cig = re.split('(\d+)', tmp[5])
         taille = 0
