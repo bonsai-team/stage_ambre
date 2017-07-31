@@ -17,13 +17,15 @@ for aln in sam:
     matchs = 0
     clips = 0
     for i in range(0, len(cig)):
-        if cig[i] == "M" or cig[i] == "=":
-            matchs += int(cig[i - 1])
         if cig[i] == "S" or cig[i] == "H":
             clips += int(cig[i - 1])
     taille_aln = len(aln[9]) - clips
-    mean += (1 - float(matchs) / taille_aln)
+    for i in range(0, len(aln)):
+        if aln[i].split(":")[0] == "NM":
+            edit_d = aln[i].split(":")[2]
+    error = int(edit_d) / float(taille_aln)
+    mean += error
     c += 1
-    output.write(str(1 - float(matchs) / taille_aln) + " " + str(len(aln[9])) + " " + str(taille_aln) + "\n")
+    output.write(str(error) + " " + str(len(aln[9])) + " " + str(taille_aln) + "\n")
 output.close()
 print("Taux d'erreur moyen : {}%".format(mean / c * 100))
