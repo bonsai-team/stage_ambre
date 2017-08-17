@@ -20,7 +20,7 @@ for aln in sam:
         nb_aln += 1
         flag = True
         tmp = aln.split()
-        if (tmp[1] == "256" or tmp[1] >= "2048"):
+        if (tmp[1] == "256" or int(tmp[1]) >= 2048):
             flag = False
             sec += 1
             continue
