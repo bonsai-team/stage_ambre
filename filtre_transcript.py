@@ -5,7 +5,7 @@ from Bio import SeqIO
 #usage : python filtre_transcript.py ref_transcript.fa
 
 start_time = time.time()
-output = open("transcript.fa", "w")
+output = open("new_" + sys.argv[1], "w")
 compt = 0
 for record in SeqIO.parse(sys.argv[1], "fasta"):
     if len(record.seq) > 200:
